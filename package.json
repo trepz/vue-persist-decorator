@@ -1,0 +1,15 @@
+{
+  "name": "vue-rx-decorators",
+  "version": "1.0.0",
+  "description": "vue-rx decorators for class components",
+  "main": "lib/vue-rx-decorators.umd.js",
+  "module": "lib/vue-rx-decorators.js",
+  "repository": "https://github.com/trepz/vue-rx-decorators.git",
+  "author": "trepz",
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "typescript",
+    "decorator"
+  ]
+}
