@@ -11,5 +11,8 @@
     "vue",
     "typescript",
     "decorator"
-  ]
+  ],
+  "dependencies": {
+    "vue-class-component": "^6.3.2"
+  }
 }
