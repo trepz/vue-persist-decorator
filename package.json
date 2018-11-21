@@ -7,6 +7,9 @@
   "repository": "https://github.com/trepz/vue-rx-decorators.git",
   "author": "trepz",
   "license": "MIT",
+  "scripts": {
+    "fmt": "prettier --write \"./**/*.ts\""
+  },
   "keywords": [
     "vue",
     "typescript",
@@ -18,6 +21,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.9",
     "jest": "^23.6.0",
+    "prettier": "^1.15.2",
     "rollup": "^0.67.3",
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-typescript": "^1.0.0",
