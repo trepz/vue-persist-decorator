@@ -1,10 +1,12 @@
 import { createDecorator } from 'vue-class-component'
 
-/**
- * Dummy decorator.
- */
-export const Dummy = (): PropertyDecorator => {
-	return createDecorator((options, key) => {
-		;(options.props || ((options.props = {}) as any))[key] = 'dummy'
-	})
+export interface PersistOptions {
+  expiry?: Date
+  key?: string
+}
+
+export const Persist = (options?: PersistOptions): PropertyDecorator => {
+  return createDecorator((componentOptions, k) => {
+    const { key, expiry } = options || ({ key: `component-${componentOptions.name}-key-${k}` } as PersistOptions)
+  })
 }
