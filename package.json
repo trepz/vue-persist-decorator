@@ -8,6 +8,7 @@
   "author": "trepz",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "fmt": "prettier --write \"./**/*.ts\""
   },
   "keywords": [
