@@ -1,4 +1,4 @@
 # vue-rx-decorators
-Decorators for vue-rx in class components
+Clean local storage bindings for vue class components
 
 Work in progress
