@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { Dummy } from '../src/vue-rx-decorators'
+import { Dummy } from '../src/vue-persist-decorator'
 
 test('dummy decorator does something', async () => {
 	@Component
