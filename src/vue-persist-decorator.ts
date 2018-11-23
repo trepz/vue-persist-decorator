@@ -6,7 +6,14 @@ export interface PersistOptions {
 }
 
 export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
-  return createDecorator((componentOptions, k) => {
-    const { key = `component-${componentOptions.name}-key-${k}`, expiry } = options
+  return createDecorator((opts, k) => {
+    const { key = `${opts.name}_${k}`, expiry } = options
+    if (typeof opts.computed !== 'object') opts.computed = Object.create(null)
+    ;(opts.computed as any)[k] = {
+      get() {
+        return ''
+      },
+      set() {}
+    }
   })
 }
