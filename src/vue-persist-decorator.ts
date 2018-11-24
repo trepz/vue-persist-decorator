@@ -21,7 +21,9 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
             get() {
                 return localStorage.getItem(key) || defaultValue || undefined
             },
-            set() {},
+            set(value: any) {
+                localStorage.setItem(key, value)
+            },
         }
     })
 }
