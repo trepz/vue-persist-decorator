@@ -30,4 +30,8 @@ describe('Reading and writing', () => {
         comp.hello = 'hi'
         expect(localStorage.store.comp_hello).toBe('hi')
     })
+
+    test('getting the property from localStorage', () => {
+        expect(comp.hello).toBe('hi')
+    })
 })
