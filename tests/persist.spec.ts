@@ -14,15 +14,20 @@ const factory = (options?: PersistOptions) => {
     return new Comp()
 }
 
-test('a computed property is set which matches the name of the data property', () => {
-    const comp = factory()
-    const computed = comp.$options.computed
-    expect(computed).toBeDefined()
-    expect(computed!.hello).toBeDefined()
-})
+describe('Reading and writing', () => {
+    let comp: any
+    beforeEach(() => {
+        comp = factory()
+    })
 
-test('setting the property stores in localStorage', () => {
-    const comp = factory()
-    comp.hello = 'hi'
-    expect(localStorage.store.comp_hello).toBe('hi')
+    test('a computed property is set which matches the name of the data property', () => {
+        const computed = comp.$options.computed
+        expect(computed).toBeDefined()
+        expect(computed!.hello).toBeDefined()
+    })
+
+    test('setting the property stores in localStorage', () => {
+        comp.hello = 'hi'
+        expect(localStorage.store.comp_hello).toBe('hi')
+    })
 })
