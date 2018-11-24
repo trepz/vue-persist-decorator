@@ -48,4 +48,10 @@ describe('Storage keys', () => {
         comp.hello = 'something different'
         expect(localStorage.store.different_hello).toBe('something different')
     })
+
+    test('default key name can be overridden using key option', () => {
+        const comp = factory({ key: 'custom_key' })
+        comp.hello = 'custom'
+        expect(localStorage.store.custom_key).toBe('custom')
+    })
 })
