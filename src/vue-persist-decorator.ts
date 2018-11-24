@@ -19,7 +19,7 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
         // Create getter and setter
         ;(opts.computed as any)[k] = {
             get() {
-                return ''
+                return localStorage.getItem(key) || defaultValue || undefined
             },
             set() {},
         }
