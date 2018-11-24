@@ -35,3 +35,17 @@ describe('Reading and writing', () => {
         expect(comp.hello).toBe('hi')
     })
 })
+
+describe('Storage keys', () => {
+    test('it uses the class name as a key by default', () => {
+        const comp = factory()
+        comp.hello = 'keys'
+        expect(localStorage.store.comp_hello).toBe('keys')
+    })
+
+    test('it uses the component name if manually set', () => {
+        const comp = factory({}, { name: 'different' })
+        comp.hello = 'something different'
+        expect(localStorage.store.different_hello).toBe('something different')
+    })
+})
