@@ -17,3 +17,8 @@ test('a computed property is set which matches the name of the data property', (
     expect(computed).toBeDefined()
     expect(computed!.hello).toBeDefined()
 })
+
+test('setting the property stores in localStorage', () => {
+    comp.hello = 'hi'
+    expect(localStorage.store.comp_hello).toBe('hi')
+})
