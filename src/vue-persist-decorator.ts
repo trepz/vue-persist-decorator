@@ -7,8 +7,13 @@ export interface PersistOptions {
 
 export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
     return createDecorator((opts, k) => {
-        const { key = `${opts.name}_${k}`, expiry } = options
+        const name = (opts.name || '_').toLowerCase()
+        const { key = `${name}_${k}`, expiry } = options
+
+        // Create an empty computed object if one doesn't exist in options already
         if (typeof opts.computed !== 'object') opts.computed = Object.create(null)
+
+        // Create getter and setter
         ;(opts.computed as any)[k] = {
             get() {
                 return ''
