@@ -5,8 +5,8 @@ import { LocalStorageMock } from './mocks/localstorage.mock'
 
 global.localStorage = new LocalStorageMock()
 
-const factory = (options?: PersistOptions) => {
-    @Component
+const factory = (options?: PersistOptions, componentOptions?: any) => {
+    @Component(componentOptions)
     class Comp extends Vue {
         @Persist(options)
         hello!: string
