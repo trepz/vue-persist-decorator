@@ -5,7 +5,7 @@ import { Persist } from '../src/vue-persist-decorator'
 @Component
 class Comp extends Vue {
     @Persist()
-    hello: string = 'hi'
+    hello!: string
 }
 const comp = new Comp()
 
