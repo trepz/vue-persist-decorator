@@ -16,6 +16,9 @@ const factory = (options?: PersistOptions, componentOptions?: any) => {
     return new Comp()
 }
 
+// Empty localstorage before each describe block for clean data
+beforeEach(() => localStorage.clear())
+
 describe('Reading and writing', () => {
     let comp: any
     beforeEach(() => {
