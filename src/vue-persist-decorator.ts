@@ -19,10 +19,18 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
         // Create getter and setter
         ;(opts.computed as any)[k] = {
             get() {
-                return localStorage.getItem(key) || defaultValue || undefined
+                const item = localStorage.getItem(key)
+                if (!item) return defaultValue || undefined
+
+                try {
+                    const value = JSON.parse(item)
+                    return value
+                } catch (e) {
+                    return
+                }
             },
             set(value: any) {
-                localStorage.setItem(key, value)
+                localStorage.setItem(key, JSON.stringify({ value }))
             },
         }
     })
