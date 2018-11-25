@@ -23,8 +23,8 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
                 if (!item) return defaultValue || undefined
 
                 try {
-                    const value = JSON.parse(item)
-                    return value
+                    const data = JSON.parse(item)
+                    return data.value
                 } catch (e) {
                     return
                 }
