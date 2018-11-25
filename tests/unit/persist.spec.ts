@@ -11,7 +11,7 @@ const factory = (options?: PersistOptions, componentOptions?: any) => {
     @Component(componentOptions)
     class Comp extends Vue {
         @Persist(options)
-        hello!: any
+        hello!: string
     }
     return new Comp()
 }
@@ -38,8 +38,7 @@ describe('Reading and writing', () => {
     })
 
     test('getting the property from localStorage', () => {
-        expect(comp.hello).toBeDefined()
-        expect(comp.hello.value).toBe('hi')
+        expect(comp.hello).toBe('hi')
     })
 })
 
@@ -66,6 +65,6 @@ describe('Storage keys', () => {
 describe('Default values', () => {
     test('it returns the default value provided if the key is never set', () => {
         const comp = factory({ default: 'fall back to me' })
-        expect(comp.hello.value).toBe('fall back to me')
+        expect(comp.hello).toBe('fall back to me')
     })
 })
