@@ -16,7 +16,6 @@ const factory = (options?: PersistOptions, componentOptions?: any) => {
     return new Comp()
 }
 
-// Empty localstorage before each describe block for clean data
 beforeEach(() => localStorage.clear())
 
 describe('Reading and writing', () => {
@@ -38,6 +37,7 @@ describe('Reading and writing', () => {
     })
 
     test('getting the property from localStorage', () => {
+        comp.hello = 'hi'
         expect(comp.hello).toBe('hi')
     })
 })
