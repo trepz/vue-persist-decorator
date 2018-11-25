@@ -9,7 +9,8 @@
     "license": "MIT",
     "scripts": {
         "test": "jest",
-        "fmt": "prettier --write \"./**/*.ts\""
+        "fmt": "prettier --write \"./**/*.ts\"",
+        "build": "tsc"
     },
     "keywords": [
         "vue",
