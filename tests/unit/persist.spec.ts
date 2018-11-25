@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { Persist, PersistOptions } from '../src/vue-persist-decorator'
-import { LocalStorageMock } from './mocks/localstorage.mock'
+import { Persist, PersistOptions } from '../../src/vue-persist-decorator'
+import { LocalStorageMock } from '../mocks/localstorage.mock'
 
 global.localStorage = new LocalStorageMock()
 
