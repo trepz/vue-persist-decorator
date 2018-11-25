@@ -31,11 +31,12 @@ describe('Reading and writing', () => {
     test('setting the property stores in localStorage', () => {
         comp.hello = 'hi'
         const item = localStorage.getItem('comp_hello')
-        expect(item).toBe('hi')
+        expect(item).toBe(JSON.stringify({ value: 'hi' }))
     })
 
     test('getting the property from localStorage', () => {
-        expect(comp.hello).toBe('hi')
+        expect(comp.hello).toBeDefined()
+        expect(comp.hello.value).toBe('hi')
     })
 })
 
@@ -43,18 +44,18 @@ describe('Storage keys', () => {
     test('it uses the class name as a key by default', () => {
         const comp = factory()
         comp.hello = 'keys'
-        expect(localStorage.getItem('comp_hello')).toBe('keys')
+        expect(localStorage.getItem('comp_hello')).toBeDefined()
     })
 
     test('it uses the component name if manually set', () => {
         const comp = factory({}, { name: 'different' })
         comp.hello = 'something different'
-        expect(localStorage.getItem('different_hello')).toBe('something different')
+        expect(localStorage.getItem('different_hello')).toBeDefined()
     })
 
     test('default key name can be overridden using key option', () => {
         const comp = factory({ key: 'custom_key' })
         comp.hello = 'custom'
-        expect(localStorage.getItem('custom_key')).toBe('custom')
+        expect(localStorage.getItem('custom_key')).toBeDefined()
     })
 })
