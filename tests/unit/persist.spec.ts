@@ -3,6 +3,8 @@ import Component from 'vue-class-component'
 import { Persist, PersistOptions } from '../../src/vue-persist-decorator'
 import { LocalStorageMock } from '../mocks/localstorage.mock'
 
+declare var global: any
+
 global.localStorage = new LocalStorageMock()
 
 const factory = (options?: PersistOptions, componentOptions?: any) => {
