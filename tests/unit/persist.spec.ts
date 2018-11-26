@@ -102,3 +102,14 @@ describe('Automatic type casting on stored values', () => {
         expect(Array.isArray(comp.hello)).toBeTruthy()
     })
 })
+
+describe('Expiry date', () => {
+    test('expiry key is not added by default', () => {
+        const comp = factory<string>()
+        comp.hello = 'hi'
+
+        const obj = JSON.parse(localStorage.getItem('comp_hello') || '')
+        expect(obj.value).toBe('hi')
+        expect(obj.expiry).toBeUndefined()
+    })
+})
