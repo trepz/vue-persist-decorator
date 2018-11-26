@@ -112,4 +112,13 @@ describe('Expiry date', () => {
         expect(obj.value).toBe('hi')
         expect(obj.expiry).toBeUndefined()
     })
+
+    test('adding expiry settings creates expiry prop as a date', () => {
+        const comp = factory<string>({ expiry: '2h' })
+        comp.hello = 'hey'
+
+        const obj = JSON.parse(localStorage.getItem('comp_hello') || '')
+        expect(obj.value).toBe('hey')
+        expect(obj.expiry).toBeInstanceOf(Date)
+    })
 })
