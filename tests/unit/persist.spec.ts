@@ -119,6 +119,6 @@ describe('Expiry date', () => {
 
         const obj = JSON.parse(localStorage.getItem('comp_hello') || '')
         expect(obj.value).toBe('hey')
-        expect(obj.expiry).toBeInstanceOf(Date)
+        expect(new Date(obj.expiry).getDate()).not.toBeNaN()
     })
 })
