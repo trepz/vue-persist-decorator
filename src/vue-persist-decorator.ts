@@ -6,6 +6,13 @@ export interface PersistOptions {
     default?: any
 }
 
+export interface PersistObject {
+    key: string
+    value: string
+    expiry?: Date
+    default?: any
+}
+
 export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
     return createDecorator((opts, k) => {
         const name = (opts.name || '_').toLowerCase()
