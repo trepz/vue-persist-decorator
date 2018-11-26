@@ -67,4 +67,10 @@ describe('Default values', () => {
         const comp = factory<string>({ default: 'fall back to me' })
         expect(comp.hello).toBe('fall back to me')
     })
+
+    test('it does not return the default value if something exists in storage', () => {
+        localStorage.setItem('comp_hello', JSON.stringify({ value: 'should be me' }))
+        const comp = factory<string>({ default: 'fall back to me' })
+        expect(comp.hello).toBe('should be me')
+    })
 })
