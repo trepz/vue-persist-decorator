@@ -1,7 +1,7 @@
 import { createDecorator } from 'vue-class-component'
 
 export interface PersistOptions {
-    expiry?: Date
+    expiry?: string
     key?: string
     default?: any
 }
