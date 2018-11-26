@@ -74,3 +74,31 @@ describe('Default values', () => {
         expect(comp.hello).toBe('should be me')
     })
 })
+
+describe('Automatic type casting on stored values', () => {
+    test('string', () => {
+        const comp = factory<string>()
+        comp.hello = 'hi'
+        expect(typeof comp.hello).toBe('string')
+    })
+    test('number', () => {
+        const comp = factory<number>()
+        comp.hello = 3
+        expect(typeof comp.hello).toBe('number')
+    })
+    test('object', () => {
+        const comp = factory<any>()
+        comp.hello = { greet: 'tings' }
+        expect(typeof comp.hello).toBe('object')
+    })
+    test('boolean', () => {
+        const comp = factory<boolean>()
+        comp.hello = true
+        expect(typeof comp.hello).toBe('boolean')
+    })
+    test('array', () => {
+        const comp = factory<string[]>()
+        comp.hello = ['hi', 'hello']
+        expect(Array.isArray(comp.hello)).toBeTruthy()
+    })
+})
