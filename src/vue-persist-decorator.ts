@@ -8,7 +8,7 @@ export interface PersistOptions {
 
 export interface PersistObject {
     value: string
-    expiry?: Date
+    expiry?: string
     default?: any
 }
 
@@ -44,6 +44,6 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
     })
 }
 
-export function parseRelativeDate(dateString: string): Date {
-    return new Date()
+export function parseRelativeDate(dateString: string): string {
+    return new Date().toISOString()
 }
