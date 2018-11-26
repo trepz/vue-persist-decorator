@@ -7,7 +7,6 @@ export interface PersistOptions {
 }
 
 export interface PersistObject {
-    key: string
     value: string
     expiry?: Date
     default?: any
@@ -30,14 +29,15 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
                 if (!item) return defaultValue || undefined
 
                 try {
-                    const data = JSON.parse(item)
+                    const data: PersistObject = JSON.parse(item)
                     return data.value
                 } catch (e) {
                     return
                 }
             },
             set(value: any) {
-                localStorage.setItem(key, JSON.stringify({ value }))
+                const persist: PersistObject = { value }
+                localStorage.setItem(key, JSON.stringify(persist))
             },
         }
     })
