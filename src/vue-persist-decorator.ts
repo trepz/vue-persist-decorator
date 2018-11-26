@@ -42,3 +42,7 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
         }
     })
 }
+
+export function parseRelativeDate(dateString: string): Date {
+    return new Date()
+}
