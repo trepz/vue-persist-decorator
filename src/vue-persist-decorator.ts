@@ -12,10 +12,10 @@ export interface PersistObject {
     default?: any
 }
 
-export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
+export function Persist(options: PersistOptions = {}): PropertyDecorator {
     return createDecorator((opts, k) => {
         const name = (opts.name || '_').toLowerCase()
-        const { key = `${name}_${k}`, default: defaultValue, expiry } = options
+        const { key = `${name}_${k}`, default: defaultValue, expiry: expiryString } = options
 
         // Create an empty computed object if one doesn't exist in options already
         if (typeof opts.computed !== 'object') {
@@ -37,6 +37,7 @@ export const Persist = (options: PersistOptions = {}): PropertyDecorator => {
             },
             set(value: any) {
                 const persist: PersistObject = { value }
+                if (expiryString) persist.expiry = parseRelativeDate(expiryString)
                 localStorage.setItem(key, JSON.stringify(persist))
             },
         }
