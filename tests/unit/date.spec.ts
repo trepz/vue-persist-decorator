@@ -4,7 +4,7 @@ declare var global: any
 /**
  * Override date constructor to return a consistent date for diffing.
  */
-const constantDate = new Date('2018-05-30T07:30:00')
+const constantDate = new Date('2018-05-30T07:30:00.000Z')
 global.Date = class extends Date {
     constructor() {
         super()
