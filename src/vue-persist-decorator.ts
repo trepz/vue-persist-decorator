@@ -8,7 +8,7 @@ export interface PersistOptions {
 
 export interface PersistObject {
     value: string
-    expiry?: string
+    expiry?: number
     default?: any
 }
 
@@ -44,7 +44,8 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
     })
 }
 
-export function parseRelativeTime(dateString: string): string {
+export function parseRelativeTime(dateString: string): number {
+    const epoch = Date.now()
     const dateArray: string[] = dateString.split(/([a-zA-Z]{1})/)
     if (isNaN(+dateArray[0])) throw new Error('Failed to parse time.')
 
@@ -57,7 +58,5 @@ export function parseRelativeTime(dateString: string): string {
         d: 1000 * 60 * 60 * 24,
     }
     const multiplier: number = extensions[dateArray[1]] || extensions.h
-
-    const date = new Date(new Date().getTime() + input * multiplier)
-    return date.toISOString()
+    return epoch + input * multiplier
 }
