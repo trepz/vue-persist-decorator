@@ -30,6 +30,6 @@ describe('Date parsing function', () => {
     })
 
     test('it throws an error if it can not parse the string as a number', () => {
-        expect(parseRelativeTime('abcd')).toThrow()
+        expect(parseRelativeTime).toThrow()
     })
 })
