@@ -6,9 +6,9 @@ declare var global: any
  */
 const constantDate = new Date('2018-05-30T07:30:00.000Z')
 global.Date = class extends Date {
-    constructor() {
-        super()
-        return constantDate
+    constructor(b: any) {
+        super(b)
+        if (!b) return constantDate
     }
 }
 
