@@ -37,14 +37,14 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
             },
             set(value: any) {
                 const persist: PersistObject = { value }
-                if (expiryString) persist.expiry = parseRelativeDate(expiryString)
+                if (expiryString) persist.expiry = parseRelativeTime(expiryString)
                 localStorage.setItem(key, JSON.stringify(persist))
             },
         }
     })
 }
 
-export function parseRelativeDate(dateString: string): string {
+export function parseRelativeTime(dateString: string): string {
     const dateArray: string[] = dateString.split(/([a-zA-Z]{1})/)
     if (isNaN(+dateArray[0])) throw new Error('Failed to parse time.')
 

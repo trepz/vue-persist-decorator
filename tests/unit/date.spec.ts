@@ -1,4 +1,4 @@
-import { parseRelativeDate } from '../../src/vue-persist-decorator'
+import { parseRelativeTime } from '../../src/vue-persist-decorator'
 declare var global: any
 
 /**
