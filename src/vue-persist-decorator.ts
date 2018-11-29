@@ -45,5 +45,19 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
 }
 
 export function parseRelativeDate(dateString: string): string {
-    return new Date().toISOString()
+    const dateArray: string[] = dateString.split(/([a-zA-Z]{1})/)
+    if (isNaN(+dateArray[0])) throw new Error('Failed to parse time.')
+
+    const input = Math.round(+dateArray[0])
+    const extensions: { [key: string]: number } = {
+        ms: 1,
+        s: 1000,
+        m: 1000 * 60,
+        h: 1000 * 60 * 60,
+        d: 1000 * 60 * 60 * 24,
+    }
+    const multiplier: number = extensions[dateArray[1]] || extensions.h
+
+    const date = new Date(new Date().getTime() + input * multiplier)
+    return date.toISOString()
 }
