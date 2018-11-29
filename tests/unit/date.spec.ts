@@ -23,4 +23,13 @@ describe('Date parsing function', () => {
         time = parseRelativeTime('221d')
         expect(time - now).toBe(1000 * 60 * 60 * 24 * 221)
     })
+
+    test('it defaults to hours if no unit is provided', () => {
+        const time = parseRelativeTime('5')
+        expect(time - now).toBe(1000 * 60 * 60 * 5)
+    })
+
+    test('it throws an error if it can not parse the string as a number', () => {
+        expect(parseRelativeTime('abcd')).toThrow()
+    })
 })
