@@ -46,7 +46,7 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
 
 export function parseRelativeTime(dateString: string): number {
     const epoch = Date.now()
-    const dateArray: string[] = dateString.split(/([a-zA-Z]{1})/)
+    const dateArray: string[] = dateString.split(/([a-zA-Z]+)/)
     if (isNaN(+dateArray[0])) throw new Error('Failed to parse time.')
 
     const input = Math.round(+dateArray[0])
