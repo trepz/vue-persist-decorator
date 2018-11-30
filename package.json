@@ -1,6 +1,6 @@
 {
     "name": "vue-persist-decorator",
-    "version": "1.0.0",
+    "version": "0.5.0",
     "description": "Clean local storage bindings for vue class components",
     "main": "lib/vue-persist-decorator.umd.js",
     "module": "lib/vue-persist-decorator.js",
