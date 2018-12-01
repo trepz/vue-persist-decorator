@@ -2,8 +2,7 @@
     "name": "vue-persist-decorator",
     "version": "0.5.0",
     "description": "Clean local storage bindings for vue class components",
-    "main": "lib/vue-persist-decorator.umd.js",
-    "module": "lib/vue-persist-decorator.js",
+    "main": "lib/vue-persist-decorator.js",
     "repository": "https://github.com/trepz/vue-persist-decorator.git",
     "author": "trepz",
     "license": "MIT",
@@ -12,6 +11,9 @@
         "fmt": "prettier --write \"./**/*.ts\"",
         "build": "tsc"
     },
+    "files": [
+        "lib"
+    ],
     "keywords": [
         "vue",
         "typescript",
