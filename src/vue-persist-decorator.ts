@@ -26,10 +26,15 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
         ;(opts.computed as any)[k] = {
             get() {
                 const item = localStorage.getItem(key)
-                if (!item) return defaultValue || undefined
+                if (!item) return defaultValue
 
                 try {
                     const data: PersistObject = JSON.parse(item)
+
+                    if (data.expiry && new Date(data.expiry).getTime() - Date.now() <= 0) {
+                        return defaultValue
+                    }
+
                     return data.value
                 } catch (e) {
                     return
