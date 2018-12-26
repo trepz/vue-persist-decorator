@@ -18,33 +18,36 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
         const { key = `${name}_${k}`, default: defaultValue, expiry: expiryString } = options
 
         // Create an empty computed object if one doesn't exist in options already
-        if (typeof opts.computed !== 'object') {
-            opts.computed = Object.create(null)
+        if (typeof opts.watch !== 'object') {
+            opts.watch = Object.create(null)
         }
 
         // Create getter and setter
-        ;(opts.computed as any)[k] = {
-            get() {
-                const item = localStorage.getItem(key)
-                if (!item) return defaultValue
-
-                try {
-                    const data: PersistObject = JSON.parse(item)
-
-                    if (data.expiry && new Date(data.expiry).getTime() - Date.now() <= 0) {
-                        return defaultValue
-                    }
-
-                    return data.value
-                } catch (e) {
-                    return
-                }
-            },
-            set(value: any) {
+        ;(opts.watch as any)[k] = {
+            handler(value: any) {
                 const persist: PersistObject = { value }
                 if (expiryString) persist.expiry = parseRelativeTime(expiryString)
                 localStorage.setItem(key, JSON.stringify(persist))
             },
+            // get() {
+            //     const item = localStorage.getItem(key)
+            //     if (!item) return defaultValue
+
+            //     try {
+            //         const data: PersistObject = JSON.parse(item)
+
+            //         if (data.expiry && new Date(data.expiry).getTime() - Date.now() <= 0) {
+            //             return defaultValue
+            //         }
+
+            //         return data.value
+            //     } catch (e) {
+            //         return
+            //     }
+            // },
+            // set(value: any) {
+
+            // },
         }
     })
 }
