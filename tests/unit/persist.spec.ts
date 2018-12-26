@@ -30,10 +30,14 @@ describe('Reading and writing', () => {
         expect(watch!.hello).toBeDefined()
     })
 
-    test('setting the property stores in localStorage', () => {
+    test('setting the property stores in localStorage', done => {
         comp.hello = 'hi'
-        const item = localStorage.getItem('comp_hello')
-        expect(item).toBe(JSON.stringify({ value: 'hi' }))
+
+        comp.$nextTick(() => {
+            const item = localStorage.getItem('comp_hello')
+            expect(item).toBe(JSON.stringify({ value: 'hi' }))
+            done()
+        })
     })
 
     test('getting the property from localStorage', () => {
@@ -91,21 +95,27 @@ describe('Automatic type casting on stored values', () => {
 })
 
 describe('Expiry date', () => {
-    test('expiry key is not added by default', () => {
+    test('expiry key is not added by default', done => {
         const comp = factory<string>('')
         comp.hello = 'hi'
 
-        const obj = JSON.parse(localStorage.getItem('comp_hello') || '')
-        expect(obj.value).toBe('hi')
-        expect(obj.expiry).toBeUndefined()
+        comp.$nextTick(() => {
+            const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
+            expect(obj.value).toBe('hi')
+            expect(obj.expiry).toBeUndefined()
+            done()
+        })
     })
 
-    test('adding expiry settings creates expiry prop as a date', () => {
+    test('adding expiry settings creates expiry prop as a date', done => {
         const comp = factory<string>('', { expiry: '2h' })
         comp.hello = 'hey'
 
-        const obj = JSON.parse(localStorage.getItem('comp_hello') || '')
-        expect(obj.value).toBe('hey')
-        expect(new Date(obj.expiry).getDate()).not.toBeNaN()
+        comp.$nextTick(() => {
+            const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
+            expect(obj.value).toBe('hey')
+            expect(new Date(obj.expiry).getDate()).not.toBeNaN()
+            done()
+        })
     })
 })
