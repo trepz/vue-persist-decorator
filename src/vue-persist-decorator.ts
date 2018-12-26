@@ -3,19 +3,17 @@ import { createDecorator } from 'vue-class-component'
 export interface PersistOptions {
     expiry?: string
     key?: string
-    default?: any
 }
 
 export interface PersistObject {
     value: string
     expiry?: number
-    default?: any
 }
 
 export function Persist(options: PersistOptions = {}): PropertyDecorator {
     return createDecorator((opts, k) => {
         const name = (opts.name || '_').toLowerCase()
-        const { key = `${name}_${k}`, default: defaultValue, expiry: expiryString } = options
+        const { key = `${name}_${k}`, expiry: expiryString } = options
 
         // Create an empty computed object if one doesn't exist in options already
         if (typeof opts.watch !== 'object') {
