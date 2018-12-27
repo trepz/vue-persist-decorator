@@ -20,17 +20,30 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
             opts.watch = Object.create(null)
         }
 
-        // Add mounted hook mixin to component to load stored values
-        opts.mixins = [...(opts.mixins || []), createMixin(key, k)]
+        opts.mixins = [
+            ...(opts.mixins || []),
+            {
+                mounted() {
+                    // Get stored values
+                    const item = localStorage.getItem(key)
+                    if (item) {
+                        try {
+                            const data: PersistObject = JSON.parse(item)
+                            if (!data.expiry || new Date(data.expiry).getTime() - Date.now() > 0) this[k] = data.value
+                        } catch (e) {
+                            console.log(e)
+                        }
+                    }
 
-        // Watch decorated property and store changes
-        ;(opts.watch as any)[k] = {
-            handler(value: any) {
-                const persist: PersistObject = { value }
-                if (expiryString) persist.expiry = parseRelativeTime(expiryString)
-                localStorage.setItem(key, JSON.stringify(persist))
+                    // Setup watch handler
+                    this.$watch(k, (value: any) => {
+                        const persist: PersistObject = { value }
+                        if (expiryString) persist.expiry = parseRelativeTime(expiryString)
+                        localStorage.setItem(key, JSON.stringify(persist))
+                    })
+                },
             },
-        }
+        ]
     })
 }
 
@@ -49,20 +62,4 @@ export function parseRelativeTime(dateString: string): number {
     }
     const multiplier: number = extensions[dateArray[1]] || extensions.h
     return epoch + input * multiplier
-}
-
-export function createMixin(storageKey: string, property: string): any {
-    return {
-        mounted() {
-            const item = localStorage.getItem(storageKey)
-            if (!item) return
-            try {
-                const data: PersistObject = JSON.parse(item)
-                if (data.expiry && new Date(data.expiry).getTime() - Date.now() <= 0) return
-                this[property] = data.value
-            } catch (e) {
-                return
-            }
-        },
-    }
 }
