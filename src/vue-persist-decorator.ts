@@ -3,49 +3,42 @@ import { createDecorator } from 'vue-class-component'
 export interface PersistOptions {
     expiry?: string
     key?: string
-    default?: any
 }
 
 export interface PersistObject {
     value: string
     expiry?: number
-    default?: any
 }
 
 export function Persist(options: PersistOptions = {}): PropertyDecorator {
     return createDecorator((opts, k) => {
         const name = (opts.name || '_').toLowerCase()
-        const { key = `${name}_${k}`, default: defaultValue, expiry: expiryString } = options
+        const { key = `${name}_${k}`, expiry: expiryString } = options
 
-        // Create an empty computed object if one doesn't exist in options already
-        if (typeof opts.computed !== 'object') {
-            opts.computed = Object.create(null)
-        }
-
-        // Create getter and setter
-        ;(opts.computed as any)[k] = {
-            get() {
-                const item = localStorage.getItem(key)
-                if (!item) return defaultValue
-
-                try {
-                    const data: PersistObject = JSON.parse(item)
-
-                    if (data.expiry && new Date(data.expiry).getTime() - Date.now() <= 0) {
-                        return defaultValue
+        opts.mixins = [
+            ...(opts.mixins || []),
+            {
+                mounted() {
+                    // Get stored values
+                    const item = localStorage.getItem(key)
+                    if (item) {
+                        try {
+                            const data: PersistObject = JSON.parse(item)
+                            if (!data.expiry || new Date(data.expiry).getTime() - Date.now() > 0) this[k] = data.value
+                        } catch (e) {
+                            console.log(e)
+                        }
                     }
 
-                    return data.value
-                } catch (e) {
-                    return
-                }
+                    // Setup watch handler
+                    this.$watch(k, (value: any) => {
+                        const persist: PersistObject = { value }
+                        if (expiryString) persist.expiry = parseRelativeTime(expiryString)
+                        localStorage.setItem(key, JSON.stringify(persist))
+                    })
+                },
             },
-            set(value: any) {
-                const persist: PersistObject = { value }
-                if (expiryString) persist.expiry = parseRelativeTime(expiryString)
-                localStorage.setItem(key, JSON.stringify(persist))
-            },
-        }
+        ]
     })
 }
 
