@@ -24,12 +24,6 @@ describe('Reading and writing', () => {
         comp = factory<string>('')
     })
 
-    test('a watch object is set which matches the name of the data property', () => {
-        const watch = comp.$options.watch
-        expect(watch).toBeDefined()
-        expect(watch!.hello).toBeDefined()
-    })
-
     test('setting the property stores in localStorage', done => {
         comp.$mount()
         comp.hello = 'hi'
