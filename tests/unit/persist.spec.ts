@@ -31,6 +31,7 @@ describe('Reading and writing', () => {
     })
 
     test('setting the property stores in localStorage', done => {
+        comp.$mount()
         comp.hello = 'hi'
 
         comp.$nextTick(() => {
@@ -97,6 +98,7 @@ describe('Automatic type casting on stored values', () => {
 describe('Expiry date', () => {
     test('expiry key is not added by default', done => {
         const comp = factory<string>('')
+        comp.$mount()
         comp.hello = 'hi'
 
         comp.$nextTick(() => {
@@ -109,6 +111,7 @@ describe('Expiry date', () => {
 
     test('adding expiry settings creates expiry prop as a date', done => {
         const comp = factory<string>('', { expiry: '2h' })
+        comp.$mount()
         comp.hello = 'hey'
 
         comp.$nextTick(() => {
