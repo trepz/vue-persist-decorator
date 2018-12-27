@@ -15,11 +15,6 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
         const name = (opts.name || '_').toLowerCase()
         const { key = `${name}_${k}`, expiry: expiryString } = options
 
-        // Create an empty watch object if one doesn't exist in options already
-        if (typeof opts.watch !== 'object') {
-            opts.watch = Object.create(null)
-        }
-
         opts.mixins = [
             ...(opts.mixins || []),
             {
