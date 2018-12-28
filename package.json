@@ -32,7 +32,8 @@
         "ts-loader": "^5.3.0",
         "tslib": "^1.9.3",
         "typescript": "^3.1.6",
-        "vue": "^2.5.17"
+        "vue": "^2.5.17",
+        "vue-test-utils": "^1.0.0-beta.11"
     },
     "repository": {
         "type": "git",
