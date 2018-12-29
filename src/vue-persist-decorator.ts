@@ -3,6 +3,8 @@ import { createDecorator } from 'vue-class-component'
 export interface PersistOptions {
     expiry?: string
     key?: string
+    immediate?: boolean
+    deep?: boolean
 }
 
 export interface PersistObject {
@@ -13,7 +15,7 @@ export interface PersistObject {
 export function Persist(options: PersistOptions = {}): PropertyDecorator {
     return createDecorator((opts, k) => {
         const name = (opts.name || '_').toLowerCase()
-        const { key = `${name}_${k}`, expiry: expiryString } = options
+        const { key = `${name}_${k}`, expiry: expiryString, immediate = false, deep = true } = options
 
         opts.mixins = [
             ...(opts.mixins || []),
@@ -31,11 +33,15 @@ export function Persist(options: PersistOptions = {}): PropertyDecorator {
                     }
 
                     // Setup watch handler
-                    this.$watch(k, (value: any) => {
-                        const persist: PersistObject = { value }
-                        if (expiryString) persist.expiry = parseRelativeTime(expiryString)
-                        localStorage.setItem(key, JSON.stringify(persist))
-                    })
+                    this.$watch(
+                        k,
+                        (value: any) => {
+                            const persist: PersistObject = { value }
+                            if (expiryString) persist.expiry = parseRelativeTime(expiryString)
+                            localStorage.setItem(key, JSON.stringify(persist))
+                        },
+                        { immediate, deep },
+                    )
                 },
             },
         ]
