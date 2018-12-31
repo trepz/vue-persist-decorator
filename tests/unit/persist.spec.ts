@@ -47,25 +47,25 @@ describe('Reading and writing', () => {
     })
 })
 
-// describe('Storage keys', () => {
-//     test('it uses the class name as a key by default', () => {
-//         const comp = factory<string>('')
-//         comp.hello = 'keys'
-//         expect(localStorage.getItem('comp_hello')).toBeDefined()
-//     })
+describe('Storage keys', () => {
+    test('it uses the class name as a key by default', () => {
+        const wrapper = mount(factory<string>(''))
+        wrapper.vm.hello = 'keys'
+        expect(localStorage.getItem('comp_hello')).toBeDefined()
+    })
 
-//     test('it uses the component name if manually set', () => {
-//         const comp = factory<string>('', {}, { name: 'different' })
-//         comp.hello = 'something different'
-//         expect(localStorage.getItem('different_hello')).toBeDefined()
-//     })
+    test('it uses the component name if manually set', () => {
+        const wrapper = mount(factory<string>('', {}, { name: 'different' }))
+        wrapper.vm.hello = 'something different'
+        expect(localStorage.getItem('different_hello')).toBeDefined()
+    })
 
-//     test('default key name can be overridden using key option', () => {
-//         const comp = factory<string>('', { key: 'custom_key' })
-//         comp.hello = 'custom'
-//         expect(localStorage.getItem('custom_key')).toBeDefined()
-//     })
-// })
+    test('default key name can be overridden using key option', () => {
+        const wrapper = mount(factory<string>('', { key: 'custom_key' }))
+        wrapper.vm.hello = 'custom'
+        expect(localStorage.getItem('custom_key')).toBeDefined()
+    })
+})
 
 // describe('Automatic type casting on stored values', () => {
 //     test('string', () => {
