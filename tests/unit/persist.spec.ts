@@ -67,34 +67,6 @@ describe('Storage keys', () => {
     })
 })
 
-// describe('Automatic type casting on stored values', () => {
-//     test('string', () => {
-//         const comp = factory<string>('')
-//         comp.hello = 'hi'
-//         expect(typeof comp.hello).toBe('string')
-//     })
-//     test('number', () => {
-//         const comp = factory<number>(1)
-//         comp.hello = 3
-//         expect(typeof comp.hello).toBe('number')
-//     })
-//     test('object', () => {
-//         const comp = factory<any>({})
-//         comp.hello = { greet: 'tings' }
-//         expect(typeof comp.hello).toBe('object')
-//     })
-//     test('boolean', () => {
-//         const comp = factory<boolean>(false)
-//         comp.hello = true
-//         expect(typeof comp.hello).toBe('boolean')
-//     })
-//     test('array', () => {
-//         const comp = factory<string[]>([])
-//         comp.hello = ['hi', 'hello']
-//         expect(Array.isArray(comp.hello)).toBeTruthy()
-//     })
-// })
-
 // describe('Expiry date', () => {
 //     test('expiry key is not added by default', done => {
 //         const comp = factory<string>('')
