@@ -67,30 +67,28 @@ describe('Storage keys', () => {
     })
 })
 
-// describe('Expiry date', () => {
-//     test('expiry key is not added by default', done => {
-//         const comp = factory<string>('')
-//         comp.$mount()
-//         comp.hello = 'hi'
+describe('Expiry date', () => {
+    test('expiry key is not added by default', done => {
+        const wrapper = mount(factory<string>(''))
+        wrapper.vm.hello = 'hi'
 
-//         comp.$nextTick(() => {
-//             const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
-//             expect(obj.value).toBe('hi')
-//             expect(obj.expiry).toBeUndefined()
-//             done()
-//         })
-//     })
+        wrapper.vm.$nextTick(() => {
+            const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
+            expect(obj.value).toBe('hi')
+            expect(obj.expiry).toBeUndefined()
+            done()
+        })
+    })
 
-//     test('adding expiry settings creates expiry prop as a date', done => {
-//         const comp = factory<string>('', { expiry: '2h' })
-//         comp.$mount()
-//         comp.hello = 'hey'
+    test('adding expiry settings creates expiry prop as a date', done => {
+        const wrapper = mount(factory<string>('', { expiry: '2h' }))
+        wrapper.vm.hello = 'hey'
 
-//         comp.$nextTick(() => {
-//             const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
-//             expect(obj.value).toBe('hey')
-//             expect(new Date(obj.expiry).getDate()).not.toBeNaN()
-//             done()
-//         })
-//     })
-// })
+        wrapper.vm.$nextTick(() => {
+            const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
+            expect(obj.value).toBe('hey')
+            expect(new Date(obj.expiry).getDate()).not.toBeNaN()
+            done()
+        })
+    })
+})
