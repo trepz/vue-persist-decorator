@@ -1,6 +1,7 @@
 import 'jsdom-global/register'
 import Vue from 'vue'
 import Component from 'vue-class-component'
+import flushPromises from 'flush-promises'
 import { mount } from '@vue/test-utils'
 import { Persist, PersistOptions } from '../../src/vue-persist-decorator'
 import { LocalStorageMock } from '../mocks/localstorage.mock'
@@ -25,14 +26,14 @@ const factory = <T>(value: T, options?: PersistOptions, componentOptions?: any) 
 beforeEach(() => localStorage.clear())
 
 describe('Reading and writing', () => {
-    test('setting the property stores in localStorage', done => {
+    test('setting the property stores in localStorage', async done => {
         const wrapper = mount(factory<string>(''))
         wrapper.setData({ hello: 'hi' })
-        wrapper.vm.$nextTick(() => {
-            const item = localStorage.getItem('comp_hello')
-            expect(item).toBe(JSON.stringify({ value: 'hi' }))
-            done()
-        })
+        await flushPromises()
+
+        const item = localStorage.getItem('comp_hello')
+        expect(item).toBe(JSON.stringify({ value: 'hi' }))
+        done()
     })
 
     test('getting the property from localStorage', () => {
@@ -68,27 +69,25 @@ describe('Storage keys', () => {
 })
 
 describe('Expiry date', () => {
-    test('expiry key is not added by default', done => {
+    test('expiry key is not added by default', async done => {
         const wrapper = mount(factory<string>(''))
         wrapper.vm.hello = 'hi'
+        await flushPromises()
 
-        wrapper.vm.$nextTick(() => {
-            const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
-            expect(obj.value).toBe('hi')
-            expect(obj.expiry).toBeUndefined()
-            done()
-        })
+        const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
+        expect(obj.value).toBe('hi')
+        expect(obj.expiry).toBeUndefined()
+        done()
     })
 
-    test('adding expiry settings creates expiry prop as a date', done => {
+    test('adding expiry settings creates expiry prop as a date', async done => {
         const wrapper = mount(factory<string>('', { expiry: '2h' }))
         wrapper.vm.hello = 'hey'
+        await flushPromises()
 
-        wrapper.vm.$nextTick(() => {
-            const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
-            expect(obj.value).toBe('hey')
-            expect(new Date(obj.expiry).getDate()).not.toBeNaN()
-            done()
-        })
+        const obj = JSON.parse(localStorage.getItem('comp_hello') || '{}')
+        expect(obj.value).toBe('hey')
+        expect(new Date(obj.expiry).getDate()).not.toBeNaN()
+        done()
     })
 })
