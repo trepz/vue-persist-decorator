@@ -46,6 +46,23 @@ describe('Reading and writing', () => {
         const wrapper = mount(factory<string>(''))
         expect(wrapper.vm.hello).toBe('greetings')
     })
+
+    test('deep watching works', async done => {
+        const wrapper = mount(
+            factory<{ heck: string }>(
+                { heck: 'hello up there' },
+                { deep: true },
+                { template: `<div><input class="txt" v-model="hello.heck"></div>` },
+            ),
+        )
+        const input = wrapper.find('.txt')
+
+        input.setValue('updated text')
+        await flushPromises()
+        expect(wrapper.vm.hello.heck).toBe('updated text')
+        expect(localStorage.getItem('comp_hello')).toBe(JSON.stringify({ value: { heck: 'updated text' } }))
+        done()
+    })
 })
 
 describe('Storage keys', () => {
