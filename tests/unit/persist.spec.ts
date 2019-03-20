@@ -63,6 +63,28 @@ describe('Reading and writing', () => {
         expect(localStorage.getItem('comp_hello')).toBe(JSON.stringify({ value: { heck: 'updated text' } }))
         done()
     })
+
+    test('deep watching can be disabled', async done => {
+        const wrapper = mount(
+            factory<{ heck: string }>(
+                { heck: 'hello up there' },
+                { deep: false },
+                { template: `<div><input class="txt" v-model="hello.heck"></div>` },
+            ),
+        )
+        const input = wrapper.find('.txt')
+
+        input.setValue('updated text')
+        await flushPromises()
+        expect(wrapper.vm.hello.heck).toBe('updated text')
+        expect(localStorage.getItem('comp_hello')).toBeNull()
+
+        wrapper.vm.hello = { heck: 'full replace' }
+        await flushPromises()
+        expect(wrapper.vm.hello.heck).toBe('full replace')
+        expect(localStorage.getItem('comp_hello')).toBe(JSON.stringify({ value: { heck: 'full replace' } }))
+        done()
+    })
 })
 
 describe('Storage keys', () => {
